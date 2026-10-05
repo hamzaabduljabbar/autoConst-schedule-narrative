@@ -44,9 +44,22 @@ very long lists...), all fixed and kept as tests - see [CASES.md](CASES.md).
 - **Evidence workbook:** each sentence -> its facts -> activity IDs and raw values.
 
 ## Use
-1. Install Python 3 + `py -m pip install openpyxl`.
-2. In P6 export both updates: **File > Export > Primavera PM (XER) > Project**.
-3. Ask Claude: *"Write the schedule update narrative from last.xer and this.xer"* - or run:
+### Step 1 - Install
+**Windows:** `winget install --id Python.Python.3.12 -e` then `py -m pip install openpyxl`
+**Mac:** `brew install python@3.12` then `python3 -m pip install openpyxl` (use `python3` wherever this page says `py`)
+
+### Step 2 - Clone with Claude Code
+> *"Clone https://github.com/hamzaabduljabbar/autoConst-schedule-narrative and install it as a skill."*
+
+### Step 3 - Export both updates from P6
+Open the project > **File > Export > Primavera PM (XER) > Project** > tick one project > save.
+Do it for last month's update and this month's (or keep the XERs you already submitted).
+
+### Step 4 - Ask
+> *"Write the schedule update narrative from C:\jobs\may.xer and C:\jobs\june.xer"*
+
+Claude runs `doctor` first, tells you what it found, then drafts the narrative and asks you for the reasons,
+recovery actions and decisions it must not invent. Or run it yourself:
 ```bash
 py scripts/doctor.py last.xer this.xer --out outputs/job
 py scripts/narrative.py compare last.xer this.xer --out outputs/job

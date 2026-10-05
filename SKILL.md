@@ -59,6 +59,9 @@ a section that is empty when it shouldn't be, or too long to read.
 3b. **Before changing any code**, snapshot the real-schedule corpus (real XER pairs kept OUTSIDE this repo, by
    default `../p6-test/corpus/corpus.csv`; add the user's two files as a new row, with their OK):
    `py scripts/corpus_check.py <corpus.csv> --save <scratch>/before.json`
+   No corpus yet (a new user)? Create `corpus.csv` OUTSIDE this repo with columns name,previous,current, add every
+   pair of the user's XERs you can find (with their OK) - at least the pair that broke - and tell the user the
+   side-effect check is only as wide as the schedules in it. Never put client XERs inside the repo.
 4. Write a failing test FIRST in `tests/regression.py`, using the `xer()`/`T()` helpers to build a small invented
    fixture that reproduces the pattern. Never copy the user's project names, Activity IDs or data into tests.
 5. Make the smallest fix in `scripts/narrative.py` or `scripts/doctor.py`.
@@ -69,7 +72,8 @@ a section that is empty when it shouldn't be, or too long to read.
    one your fix was MEANT to change. For each other changed pair, open the facts and look: a side effect on a
    project you weren't fixing is a new bug - go back to step 4 with a test for it. Show the user the diff summary.
 8. Add a row to `CASES.md` (date, symptom, cause, fix, test name).
-9. Tell the user what changed and why. Ask before committing or pushing.
+9. Tell the user what changed and why. Ask before committing or pushing. If they don't own this repo, offer to
+   draft a GitHub issue for the author with the symptom, the invented test and the fix - never with their data.
 
 **Never, even to make a run pass:** edit facts.json/claims.json/.md by hand; let claims carry free text or
 typed numbers; relax the validator; invent a fact; guess a cause of delay.
